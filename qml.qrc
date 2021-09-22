@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ico/64x64/down_arrow.ico</file>
+        <file>ico/64x64/locate_gps.ico</file>
+        <file>ico/64x64/plus.ico</file>
+        <file>ico/64x64/star.ico</file>
+        <file>ico/64x64/trash.ico</file>
+        <file>ico/64x64/up_arrow.ico</file>
+        <file>video/Hubsan H122D X4 Storm.mp4</file>
+        <file>ico/64x85/star_down.ico</file>
+        <file>ico/64x85/star_up.ico</file>
+        <file>ico/64x64/fill_star.ico</file>
+    </qresource>
+</RCC>
