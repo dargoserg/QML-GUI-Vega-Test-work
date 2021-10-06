@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.15
 import QtMultimedia 5.15
 import QtQuick.Controls 2.15
 
@@ -28,6 +28,27 @@ Item
         listViewDelegate.height = 50
         hideShowButtonImage.source = "qrc:/ico/64x64/down_arrow.ico"
         loaderVideo.active = false
+    }
+
+    Connections
+    {
+        target: starButton
+        function onHideSelectedCamera()
+        {
+            if (selectedCamera)
+            {
+                hideCameraFunc()
+            }
+
+        }
+        function onShowSelectedCamera()
+        {
+            if (selectedCamera)
+            {
+                showCameraFunc()
+            }
+        }
+
     }
 
     Rectangle
@@ -86,7 +107,7 @@ Item
 
         Button
         {
-            id: priorityChangeButton
+            id: selectedChangeButton
             width: 32
             height: 32
             palette
@@ -102,21 +123,21 @@ Item
 
             Image
             {
-                id: priorityChangeButtonImage
+                id: selectedChangeButtonImage
                 anchors.fill: parent
                 source: "qrc:/ico/64x64/star.ico"
             }
             onClicked:
             {
-                if (priorityCamera)
+                if (selectedCamera)
                 {
-                    priorityCamera = false
-                    priorityChangeButtonImage.source = "qrc:/ico/64x64/star.ico"
+                    selectedCamera = false
+                    selectedChangeButtonImage.source = "qrc:/ico/64x64/star.ico"
                 }
                 else
                 {
-                    priorityCamera = true
-                    priorityChangeButtonImage.source = "qrc:/ico/64x64/fill_star.ico"
+                    selectedCamera = true
+                    selectedChangeButtonImage.source = "qrc:/ico/64x64/fill_star.ico"
                 }
             }
         }
@@ -179,7 +200,7 @@ Item
                     id: videoPlayer
                     width: 426
                     height: 240
-                    source: "qrc:/video/Hubsan H122D X4 Storm.mp4"
+                    source: srcCamera
                     autoPlay: true
                     loops: MediaPlayer.Infinite
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -255,17 +276,17 @@ Item
 
         Component.onCompleted:
         {
-            if (priorityCamera)
+            if (selectedCamera)
             {
-                if (priorityShow)
+                if (showSelectedCamera)
                 {
                     listViewDelegate.showCameraFunc()
-                    priorityChangeButtonImage.source = "qrc:/ico/64x64/fill_star.ico"
+                    selectedChangeButtonImage.source = "qrc:/ico/64x64/fill_star.ico"
                 }
                 else
                 {
                     listViewDelegate.hideCameraFunc()
-                    priorityChangeButtonImage.source = "qrc:/ico/64x64/fill_star.ico"
+                    selectedChangeButtonImage.source = "qrc:/ico/64x64/fill_star.ico"
                 }
             }
             else

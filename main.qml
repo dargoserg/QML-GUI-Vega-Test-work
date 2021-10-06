@@ -14,7 +14,7 @@ Window
     color: "#31363A"
 
     property int numberItem: 0
-    property bool priority: false
+    property bool showSelectesCamerаs: false
 
     Row
     {
@@ -50,10 +50,10 @@ Window
                 {
                     name: "ББП",
                     idNum: numberItem++,
-                    srcCamera: "src",
+                    srcCamera: "qrc:/video/Hubsan H122D X4 Storm.mp4",
                     showCamera: false,
-                    priorityCamera: false,
-                    priorityShow: true
+                    selectedCamera: false,
+                    showSelectedCamera: false
                 }
                 listModel.append(value)
             }
@@ -96,28 +96,33 @@ Window
                 source: "qrc:/ico/64x85/star_down.ico"
             }
 
+
+            signal hideSelectedCamera()
+            signal showSelectedCamera()
+
             onClicked:
             {
-                if (priority)
+                if (showSelectesCamerаs)
                 {
-                    priority = false
+                    showSelectesCamerаs = false
                     starButtonImage.source = "qrc:/ico/64x85/star_down.ico"
+                    hideSelectedCamera()
                     for (let i=0; i <listModel.count; i++)
                     {
-                        listModel.get(i).priorityShow = false
+                        listModel.get(i).showSelectedCamera = false
                     }
                 }
                 else
                 {
-                    priority = true
+                    showSelectesCamerаs = true
                     starButtonImage.source = "qrc:/ico/64x85/star_up.ico"
+                    showSelectedCamera()
                     for (let j=0; j <listModel.count; j++)
                     {
-                        listModel.get(j).priorityShow = true
+                        listModel.get(j).showSelectedCamera = true
                     }
                 }
-                listView.model = tempModel
-                listView.model = listModel
+
             }
         }
     }
@@ -152,11 +157,6 @@ Window
                 id: listModel
             }
 
-            ListModel
-            {
-                id: tempModel
-            }
-
             ListView
             {
                 id: listView
@@ -178,6 +178,7 @@ Window
                     radius: 3
                 }
                 delegate: MyListViewDelegate {}
+
             }
         }
     }
