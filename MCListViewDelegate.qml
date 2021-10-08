@@ -5,8 +5,15 @@ import QtQuick.Controls 2.15
 Item
 {
     id: listViewDelegate
-    //height: 640
-    width: 480
+
+    //if (parent != null) {anchors.right: parent.right ; anchors.left: parent.left}
+    anchors
+    {
+        left: parent ? parent.left : undefined
+        right: parent ? parent.right : undefined
+    }
+
+
 
     function showCameraFunc()
     {
@@ -188,33 +195,33 @@ Item
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
-        Component.onCompleted:
-        {
-            if (selectedCamera)
+            Component.onCompleted:
             {
-                if (showSelectedCamera)
+                if (selectedCamera)
                 {
-                    listViewDelegate.showCameraFunc()
-                    selectedChangeButtonImage.source = "qrc:/ico/64x64/fill_star.ico"
+                    if (showSelectedCamera)
+                    {
+                        listViewDelegate.showCameraFunc()
+                        selectedChangeButtonImage.source = "qrc:/ico/64x64/fill_star.ico"
+                    }
+                    else
+                    {
+                        listViewDelegate.hideCameraFunc()
+                        selectedChangeButtonImage.source = "qrc:/ico/64x64/fill_star.ico"
+                    }
                 }
                 else
                 {
-                    listViewDelegate.hideCameraFunc()
-                    selectedChangeButtonImage.source = "qrc:/ico/64x64/fill_star.ico"
-                }
-            }
-            else
-            {
-                if (showCamera)
-                {
-                    listViewDelegate.showCameraFunc()
-                }
-                else
-                {
-                    listViewDelegate.hideCameraFunc()
+                    if (showCamera)
+                    {
+                        listViewDelegate.showCameraFunc()
+                    }
+                    else
+                    {
+                        listViewDelegate.hideCameraFunc()
+                    }
                 }
             }
         }
     }
-}
 }
