@@ -5,12 +5,8 @@ import QtQuick.Controls 2.15
 Item
 {
     id: listViewDelegate
-    height: 290
-
-    anchors.left: parent.left
-    anchors.right: parent.right
-
-    property int indexOfThisDelegate: index
+    //height: 640
+    width: 480
 
     function showCameraFunc()
     {
@@ -32,7 +28,7 @@ Item
 
     Connections
     {
-        target: starButton
+        target: selectButton
         function onHideSelectedCamera()
         {
             if (selectedCamera)
@@ -188,91 +184,9 @@ Item
             Loader
             {
                 id: loaderVideo
-                sourceComponent: videoPlayerComponent
+                sourceComponent: MCCameraView{}
                 anchors.horizontalCenter: parent.horizontalCenter
             }
-            Component
-            {
-                id: videoPlayerComponent
-
-                Video
-                {
-                    id: videoPlayer
-                    width: 426
-                    height: 240
-                    source: srcCamera
-                    autoPlay: true
-                    loops: MediaPlayer.Infinite
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    MouseArea
-                    {
-                            anchors.fill: parent
-                            onClicked:
-                            {
-                                if (videoPlayer.playbackState === MediaPlayer.PausedState)
-                                {
-                                    videoPlayer.play()
-                                }
-                                else
-                                {
-                                    videoPlayer.pause()
-                                }
-                            }
-                    }
-                    Label
-                    {
-                        id: currentTimeLabel
-                        text: "00:00"
-                        color: "white"
-                        font.pixelSize: 14
-                        anchors.top: videoPlayer.top
-                        anchors.topMargin: 3
-                        anchors.right: videoPlayer.right
-                        anchors.rightMargin: 3
-
-                        Timer
-                        {
-                            interval: 500
-                            running: true
-                            repeat: true
-                            //onTriggered: timerLabel.text = Qt.formatDateTime(new Date(), "hh:mm:ss")
-                            onTriggered:
-                            {
-                                currentTimeLabel.text = new Date().toLocaleString(Qt.locale("ru_RU"),"hh:mm:ss")
-                            }
-                        }
-                    }
-                    Label
-                    {
-                        id: elapsedTime
-                        text: "00:00"
-                        color: "white"
-                        font.pixelSize: 14
-                        anchors.top: videoPlayer.top
-                        anchors.topMargin: 3
-                        anchors.left: videoPlayer.left
-                        anchors.leftMargin: 3
-                        Timer
-                        {
-                            interval: 500
-                            running: true
-                            repeat: true
-                            property double startDate : Date.now()
-                            function printElapsedTime()
-                            {
-                                let nowDate = Date.now()
-                                let elapsedDate = nowDate - startDate
-                                elapsedTime.text = new Date(elapsedDate).toLocaleString(Qt.locale("ru_RU"),"mm:ss")
-                            }
-                            onTriggered:
-                            {
-                                printElapsedTime()
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
         Component.onCompleted:
         {
@@ -302,4 +216,5 @@ Item
             }
         }
     }
+}
 }

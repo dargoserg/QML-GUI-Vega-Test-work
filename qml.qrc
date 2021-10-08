@@ -11,6 +11,7 @@
         <file>ico/64x85/star_down.ico</file>
         <file>ico/64x85/star_up.ico</file>
         <file>ico/64x64/fill_star.ico</file>
-        <file>MyListViewDelegate.qml</file>
+        <file>MCListViewDelegate.qml</file>
+        <file>MCCameraView.qml</file>
     </qresource>
 </RCC>

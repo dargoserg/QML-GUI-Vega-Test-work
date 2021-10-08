@@ -44,6 +44,7 @@ Window
                 anchors.fill: parent
                 source: "qrc:/ico/64x64/plus.ico"
             }
+
             onClicked:
             {
                 var value =
@@ -74,6 +75,7 @@ Window
                 anchors.fill: parent
                 source: "qrc:/ico/64x64/trash.ico"
             }
+
             onClicked:
             {
                 listModel.remove(listView.currentIndex)
@@ -82,7 +84,7 @@ Window
 
         Button
         {
-            id: starButton
+            id: selectButton
             width: 42
             height: 32
             palette
@@ -91,11 +93,10 @@ Window
             }
             Image
             {
-                id: starButtonImage
+                id: selectButtonImage
                 anchors.fill: parent
                 source: "qrc:/ico/64x85/star_down.ico"
             }
-
 
             signal hideSelectedCamera()
             signal showSelectedCamera()
@@ -105,7 +106,7 @@ Window
                 if (showSelectesCamerаs)
                 {
                     showSelectesCamerаs = false
-                    starButtonImage.source = "qrc:/ico/64x85/star_down.ico"
+                    selectButtonImage.source = "qrc:/ico/64x85/star_down.ico"
                     hideSelectedCamera()
                     for (let i=0; i <listModel.count; i++)
                     {
@@ -115,21 +116,20 @@ Window
                 else
                 {
                     showSelectesCamerаs = true
-                    starButtonImage.source = "qrc:/ico/64x85/star_up.ico"
+                    selectButtonImage.source = "qrc:/ico/64x85/star_up.ico"
                     showSelectedCamera()
                     for (let j=0; j <listModel.count; j++)
                     {
                         listModel.get(j).showSelectedCamera = true
                     }
                 }
-
             }
         }
     }
 
     Rectangle
     {
-        id: recFlic
+        id: borderRectangle
 
         anchors.top: topButtonRow.bottom
         anchors.bottom: parent.bottom
@@ -138,48 +138,43 @@ Window
         anchors.topMargin: 5
         anchors.leftMargin: 5
         anchors.rightMargin: 5
-        anchors.bottomMargin: 5
+        anchors.bottomMargin: 10
 
         color: "transparent"
         border.color: "white"
         border.width: 3
         radius: 5
 
-        Flickable{
+        ListModel
+        {
+            id: listModel
+        }
+
+        ListView
+        {
+            id: listView
+            model: listModel
+            spacing: 5
+
             anchors.fill: parent
-            anchors.topMargin: 3
-            anchors.bottomMargin: 3
+            anchors.topMargin: 5
+            anchors.bottomMargin: 5
+            anchors.leftMargin: 10
+            anchors.rightMargin: 10
 
             clip: true
 
-            ListModel
+            highlightFollowsCurrentItem: true
+            highlightMoveDuration: -1
+            highlightMoveVelocity: 1000
+            highlight:
+            Rectangle
             {
-                id: listModel
+                color: "#0D577E"
+                radius: 3
             }
 
-            ListView
-            {
-                id: listView
-                model: listModel
-                spacing: 5
-
-                anchors.fill: parent
-                anchors.leftMargin: 10
-                anchors.rightMargin: 10
-                topMargin: 5
-                bottomMargin: 5
-
-                highlightFollowsCurrentItem: true
-                highlightMoveDuration: 100
-                highlight:
-                Rectangle
-                {
-                    color: "#0D577E"
-                    radius: 3
-                }
-                delegate: MyListViewDelegate {}
-
-            }
+            delegate: MCListViewDelegate {}
         }
     }
 }
